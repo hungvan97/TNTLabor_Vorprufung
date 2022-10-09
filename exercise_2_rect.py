@@ -1,3 +1,4 @@
+import math
 def find_rect(img):
     # Given a binary image with black (=False) background containing a single white (=True) rotated square, return
     # the center of mass (x, y) of said square, its edge length (l) and its rotation angle (alpha). The square will
@@ -17,6 +18,23 @@ def find_rect(img):
     import numpy as np
 
     x, y, l, alpha = 0, 0, 0, 0
+    ecke_coordinaten = []
 
-    # TODO: Add your solution here
+    # store the coordinaten of 4 corner as an array with descending of height
+    for h in range(len(img)):
+        for w in range(len(img[h])):
+            if img[h][w] == True:
+                ecke_coordinaten.append((h, w))
+
+    # center's parameter
+    x = (ecke_coordinaten[0][1] + ecke_coordinaten[-1][1]) / 2
+    y = (ecke_coordinaten[0][0] + ecke_coordinaten[-1][0]) / 2
+    l = math.sqrt((ecke_coordinaten[0][0] - ecke_coordinaten[-1][0])**2 + (ecke_coordinaten[0][1] - ecke_coordinaten[-1][1])**2) / math.sqrt(2)
+
+    ratio = abs(ecke_coordinaten[-1][1] - ecke_coordinaten[0][1]) / (l * math.sqrt(2))
+    if (ecke_coordinaten[-1][1] - ecke_coordinaten[0][1]) > 0: # die niedrige Ecke steht recht auf die hochste Ecke
+        alpha = 180 - math.degrees(math.acos(ratio)) - 45
+    else:                                                      # die niedrige Ecke steht link auf die hochste Ecke
+        alpha = math.degrees(math.acos(ratio)) - 45
+
     return x, y, l, alpha
