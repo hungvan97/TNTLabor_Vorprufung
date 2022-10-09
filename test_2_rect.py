@@ -7,7 +7,6 @@ def generate_rot_square(w, h, x, y, l, alpha):
     rect = np.ones((l, l))
     rect = rotate(rect, alpha)
     r_h, r_w = rect.shape
-    print(r_h, r_w)
     r_h_1 = r_h // 2
     r_h_2 = r_h - r_h_1
     r_w_1 = r_w // 2
@@ -35,7 +34,6 @@ def angle_close(a_true, a_pred, tol=5):
 
 def do_test_rot_square(w, h, x, y, l, alpha):
     img = generate_rot_square(w, h, x, y, l, alpha)
-    print(img.shape)
     x_p, y_p, l_p, alpha_p = find_rect(img)
 
     assert x - 1 <= x_p <= x + 1
